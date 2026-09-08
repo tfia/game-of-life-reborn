@@ -281,3 +281,4 @@
   }
 /* Keep the entry point above GitHub's table layers for pointer hit testing. */
 #gol-button-play { position: relative; z-index: 20; display: inline-block; pointer-events: auto; }
+#gol-button-play { appearance: none; border: 0; background: transparent; font: inherit; }
