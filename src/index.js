@@ -636,6 +636,9 @@
       Canvas.remove()
       Controls.remove()
       Game.container = null
+      Game.board = null
+      Game.generation = 0
+      Game.init()
     }
   }
 
@@ -646,6 +649,10 @@
         e.preventDefault()
         if (!Game.container) Game.play()
       }
+    }, true)
+    document.addEventListener('click', function(e) {
+      var target = e.target && e.target.closest && e.target.closest('#gol-button-play')
+      if (target && document.documentElement.contains(target)) { e.preventDefault(); if (!Game.container) Game.play() }
     }, true)
     Game.init()
     if (typeof MutationObserver !== 'undefined') new MutationObserver(function() { if (!document.getElementById('gol-button-play')) Game.init() }).observe(document.documentElement, {childList:true, subtree:true})

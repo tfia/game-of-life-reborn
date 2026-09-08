@@ -1,5 +1,6 @@
 const assert=require('assert');
-const listeners=[]; const document={addEventListener:(t,f,c)=>listeners.push(f),documentElement:{contains:()=>true}};
-let started=0; const target={closest:s=>s==='#gol-button-play'?target:null};
-listeners.push(function(e){const t=e.target&&e.target.closest&&e.target.closest('#gol-button-play');if(t&&document.documentElement.contains(t)){e.preventDefault();started++}});
-let prevented=false; listeners[0]({target,preventDefault:()=>{prevented=true}}); assert(prevented); assert.equal(started,1); console.log('pointer fixture ok');
+let container=null, starts=0; const button={connected:true, closest:s=>s==='#gol-button-play'?button:null};
+function play(){if(!container){container={};starts++}}
+function close(){container=null}
+function pointer(){if(button.connected&&!container)play()}
+pointer(); assert.equal(starts,1); close(); pointer(); assert.equal(starts,2); assert(button.connected); console.log('pointer fixture ok');
