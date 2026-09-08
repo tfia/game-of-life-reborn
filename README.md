@@ -40,3 +40,7 @@ The extension preserves the original MIT licensed work by Yuán Chuān (`yuanchu
   * [Almosymmetric](http://www.conwaylife.com/wiki/Almosymmetric) -- Unknown 1971
   * [Circle of fire](http://www.conwaylife.com/wiki/Circle_of_fire) -- Unknown
   * [Carnival shuttle](http://www.conwaylife.com/wiki/Carnival_shuttle) -- Robert Wainwright 1984
+
+## Build and install locally
+
+Run `./build.sh` (or `make pack`) to create the self-contained unpacked extension at `dist/` and archive at `dist/game-of-life.zip`. In Chrome, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose the absolute `dist/` directory.

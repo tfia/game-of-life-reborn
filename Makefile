@@ -1,2 +1,5 @@
 pack:
-	@zip release/game-of-life.zip -r src/*
+	./build.sh
+
+test:
+	npm test
