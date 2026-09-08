@@ -691,5 +691,5 @@
 function findCalendar(root) {
   root = root || (typeof document !== 'undefined' ? document : null)
   if (!root || !root.querySelector) return null
-  return root.querySelector('[data-testid="contribution-graph"], .js-yearly-contributions, .ContributionCalendar')
+  return root.querySelector('[data-testid="contribution-graph"], [data-testid*="contribution"], .js-yearly-contributions, .ContributionCalendar, .ContributionCalendar-grid, table.ContributionCalendar-grid')
 }
