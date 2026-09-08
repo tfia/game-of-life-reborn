@@ -3,7 +3,6 @@ name: Release extension
 on:
   push:
     tags: ['v*']
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,9 +12,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
       - name: Read manifest version
         id: version
         run: echo "version=$(node -p "require('./src/manifest.json').version")" >> "$GITHUB_OUTPUT"
+      - name: Verify release tag matches manifest
+        env:
+          TAG: ${{ github.ref_name }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: test "$TAG" = "v$VERSION"
       - run: npm test
       - run: ./build.sh
       - name: Install Chromium

@@ -47,4 +47,4 @@ Run `./build.sh` (or `make pack`) to create the self-contained unpacked extensio
 
 ## Continuous integration and releases
 
-Every push and pull request runs `npm test` and the deterministic packaging check in GitHub Actions. To publish installable assets, create and push a new tag such as `v1.3.7` (matching `src/manifest.json`), or run the **Release extension** workflow manually. The release job builds a CRX with stable Chromium and attaches it alongside the ZIP. The Play, close, and reopen flow is covered by the pointer and adapter fixtures; a real Chrome smoke test still requires loading `dist/` manually.
+Every push and pull request runs `npm test` and the deterministic packaging check in GitHub Actions. To publish installable assets, create and push a tag that exactly matches `src/manifest.json`, for example `git tag v1.3.7 && git push origin v1.3.7`. The release job only runs for `v*` tags, verifies that exact version match, builds a CRX with stable Chromium, and attaches it alongside the ZIP. The Play, close, and reopen flow is covered by the pointer and adapter fixtures; a real Chrome smoke test still requires loading `dist/` manually.
