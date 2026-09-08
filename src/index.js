@@ -531,14 +531,14 @@
 
     var id = 'gol-button-play'
     if (graph && !document.getElementById(id)) {
-      var play = document.createElement('a')
+      var play = document.createElement('button')
       var legend = document.querySelector('.contrib-legend')
       var swatch = legend && (legend.querySelector('.legend li:nth-child(3)') || legend.querySelector('li:nth-child(3)'))
       if (swatch && typeof getComputedStyle !== 'undefined') COLOR_ALIVE = getComputedStyle(swatch).backgroundColor || COLOR_ALIVE
       play.style.setProperty('--color', COLOR_ALIVE)
       play.id = id
       play.title = "Play Conway's Game of Life"
-      play.href = '#gol-contribution-board'
+      play.type = 'button'
       play.setAttribute('role', 'button')
       play.innerHTML = 'Play'
       play.addEventListener('click', function(e) {
@@ -640,6 +640,13 @@
   }
 
   if (typeof document !== 'undefined') {
+    document.addEventListener('click', function(e) {
+      var target = e.target && e.target.closest && e.target.closest('#gol-button-play')
+      if (target && document.documentElement.contains(target)) {
+        e.preventDefault()
+        if (!Game.container) Game.play()
+      }
+    }, true)
     Game.init()
     if (typeof MutationObserver !== 'undefined') new MutationObserver(function() { if (!document.getElementById('gol-button-play')) Game.init() }).observe(document.documentElement, {childList:true, subtree:true})
   }

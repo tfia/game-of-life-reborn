@@ -1,1 +1,1 @@
-{"scripts": {"test": "node test/life.test.js && node test/adapter.test.js"}}
+{"scripts": {"test": "node test/life.test.js && node test/adapter.test.js && node test/pointer.test.js"}}
