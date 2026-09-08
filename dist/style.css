@@ -279,3 +279,5 @@
       0 4px currentColor,
       4px 4px currentColor;
   }
+/* Keep the entry point above GitHub's table layers for pointer hit testing. */
+#gol-button-play { position: relative; z-index: 20; display: inline-block; pointer-events: auto; }

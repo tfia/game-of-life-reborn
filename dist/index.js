@@ -538,8 +538,12 @@
       play.style.setProperty('--color', COLOR_ALIVE)
       play.id = id
       play.title = "Play Conway's Game of Life"
+      play.href = '#gol-contribution-board'
+      play.setAttribute('role', 'button')
       play.innerHTML = 'Play'
       play.addEventListener('click', function(e) {
+        e.preventDefault()
+        e.stopPropagation()
         if (!Game.container) Game.play()
         return false
       });
