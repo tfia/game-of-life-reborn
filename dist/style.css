@@ -1,0 +1,281 @@
+[data-gol-container] {
+  position: relative;
+}
+.border[data-gol-container] {
+  border-color: transparent !important;
+}
+  [data-gol-container] .flash-notice {
+    display: none;
+  }
+  [data-gol-container="running"] li[style$="238);"] {
+    opacity: .8;
+  }
+  [data-gol-container]:not([data-gol-container="running"])
+  #gol-contribution-board li:hover {
+    z-index: 2;
+    outline: 1px solid rgba(30, 104, 35, .55);
+  }
+
+
+#gol-contribution-board {
+  position: absolute;
+  top: -14px;
+  left: 13px;
+  width: calc(100% + 8px);
+  height: 100%;
+  background: #fff;
+  display: flex;
+}
+  #gol-contribution-board:after {
+    content: '';
+    clear: both;
+    display: block;
+    visibility: hidden;
+  }
+  #gol-contribution-board li {
+    display: block;
+    font-size: 0;
+    width: 14px;
+    height: 14px;
+    background-color: #eee;
+    transition: background-color .2s ease;
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    border: 1px solid #fff;
+    margin-left: 1px;
+    margin-bottom: 1px;
+  }
+
+[gol-layout-overview] #gol-contribution-board {
+  height: calc(100% + 62px);
+  z-index: 10;
+  top: -8px;
+  left: -5px;
+}
+
+[gol-layout-overview] #gol-contribution-board:before {
+  content: '';
+  position: absolute;
+  width: calc(100% - 8px);
+  margin: 0 auto;
+  bottom: 0;
+  height: 5px;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #d1d5da;
+  border-bottom: none;
+  left: 4px;
+}
+  [gol-layout-overview] #gol-contribution-board li {
+    width: 12px;
+    height: 12px;
+  }
+
+#gol-controls {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: -32px;
+  padding-left: 40px;
+  z-index: 11;
+  background: transparent;
+}
+[gol-layout-overview] #gol-controls {
+  background: #fff;
+}
+  #gol-controls a {
+    display: inline-block;
+    position: relative;
+    width: 5em;
+    padding: 2px 0;
+    margin: 0 2px;
+    transition: all .2s ease;
+    font-size: .8em;
+    text-decoration: none;
+    color: var(--color, #8cc665);
+    box-shadow: currentColor 0px 0px 0px 1px;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+    #gol-controls a:after {
+      content: attr(data-action);
+    }
+
+  @keyframes rotating {
+    from { transform: rotate(45deg); }
+    to { transform: rotate(0) }
+  }
+  #gol-controls a[data-action="close"] {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    line-height: 0;
+    margin-left: 10px;
+    vertical-align: text-top;
+    border:none;
+    box-shadow: none;
+    background: none;
+    color: var(--color, #8cc665);
+    opacity: .7;
+    font-size: 0;
+    -webkit-animation: rotating .2s ease;
+            animation: rotating .2s ease;
+    -webkit-transfom-origin: 50% 50%;
+            transfom-origin: 50% 50%;
+  }
+    #gol-controls a[data-action="close"]:before,
+    #gol-controls a[data-action="close"]:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 61.8%;
+      height: 1px;
+      background: currentColor;
+      -webkit-transfom-origin: 50% 50%;
+              transfom-origin: 50% 50%;
+    }
+    #gol-controls a[data-action="close"]:before {
+      -webkit-transform: translate(-50%, 0) rotate(-45deg);
+              transform: translate(-50%, 0) rotate(-45deg);
+    }
+    #gol-controls a[data-action="close"]:after {
+      -webkit-transform: translate(-50%, 0) rotate(45deg);
+              transform: translate(-50%, 0) rotate(45deg);
+    }
+    #gol-controls a[data-action="close"]:hover {
+      opacity: 1;
+    }
+
+  #gol-controls a[data-action="run"] {
+    position: relative;
+  }
+  #gol-controls a[data-action="pause"] {
+    filter: hue-rotate(-20deg);
+  }
+    #gol-controls a[data-action="run"]:before,
+    #gol-controls a[data-action="pause"]:before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: 0; bottom: 0; left: 0; right: 0;
+      background: currentColor;
+      opacity: .1;
+    }
+    #gol-controls a[data-action="pause"]:before {
+      opacity: .15;
+    }
+  #gol-controls a[disabled] {
+    background: transparent;
+    color: #e0e0e0;
+    border-color: currentColor;
+    cursor: default;
+  }
+  #gol-controls a[data-action="run"]:not([disabled]):hover:before {
+    opacity: .15;
+  }
+  #gol-controls a[data-action="next"]:not([disabled]),
+  #gol-controls a[data-action="clear"]:not([disabled]),
+  #gol-controls a[data-action="reset"]:not([disabled]) {
+    opacity: .7;
+  }
+  #gol-controls a[data-action="next"]:not([disabled]):hover,
+  #gol-controls a[data-action="clear"]:not([disabled]):hover,
+  #gol-controls a[data-action="reset"]:not([disabled]):hover {
+    opacity: 1;
+  }
+
+  #gol-controls a[data-action="reset"] {
+    width: 2.5em;
+    background: #fff;
+    will-change: opacity;
+  }
+  #gol-controls a[data-action="reset"][disabled] {
+    filter: grayscale(1);
+    opacity: .5;
+  }
+    #gol-controls a[data-action="reset"]:after {
+      content: '_';
+      visibility: hidden;
+      z-index: -1;
+    }
+    #gol-controls a[title]:not([title=""])[data-action="reset"]:before {
+      content: attr(title);
+      position: absolute;
+      white-space: nowrap;
+      left: 50%;
+      bottom: 100%;
+      transform: translate(-50%, -2px);
+      min-width: 8em;
+      margin-bottom: 4px;
+      border-radius: 2px;
+      padding: 4px 8px;
+      text-algin: center;
+      background: rgba(0, 0, 0, .5);
+      color: #fff;
+      display: none;
+    }
+    [data-gol-container=""]
+    #gol-controls a[title]:not([title=""])[data-action="reset"]:hover:before {
+      display: block;
+      transform: translate(-50%, 0);
+      z-index: 9;
+    }
+
+
+#gol-pattern-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 3px;
+  margin-left: 1px;
+  margin-top: 2px;
+}
+
+#gol-generation {
+  position: absolute;
+  left: 16px;
+  top: -10px;
+  font-size: 12px;
+  color: #b6b6b6;
+}
+[gol-layout-overview] #gol-generation {
+  left: 0;
+}
+  #gol-generation:before {
+    content: 'Generation: ';
+    margin-right: 2px;
+  }
+
+
+#gol-button-play {
+  float: left;
+  margin-right: 1em;
+  padding: 1px 5px 1px 9px;
+  vertical-align: middle;
+  transition: all .2s ease;
+  color: var(--color, #8cc665);
+  box-shadow: currentColor 0px 0px 0px .65px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+#gol-button-play:hover {
+  box-shadow: currentColor 0px 0px 0px 1px;
+  text-decoration: none;
+}
+  #gol-button-play:before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    margin: -2px 8px 0 0;
+    vertical-align: middle;
+    color: currentColor;
+    box-shadow:
+      0 -4px currentColor,
+      4px 0 currentColor,
+      -4px 4px currentColor,
+      0 4px currentColor,
+      4px 4px currentColor;
+  }
