@@ -44,3 +44,7 @@ The extension preserves the original MIT licensed work by Yuán Chuān (`yuanchu
 ## Build and install locally
 
 Run `./build.sh` (or `make pack`) to create the self-contained unpacked extension at `dist/` and archive at `dist/game-of-life.zip`. In Chrome, open `chrome://extensions`, enable **Developer mode**, select **Load unpacked**, and choose the absolute `dist/` directory.
+
+## Continuous integration and releases
+
+Every push and pull request runs `npm test` and the deterministic packaging check in GitHub Actions. To publish installable assets, create and push a new tag such as `v1.3.7` (matching `src/manifest.json`), or run the **Release extension** workflow manually. The release job builds a CRX with stable Chromium and attaches it alongside the ZIP. The Play, close, and reopen flow is covered by the pointer and adapter fixtures; a real Chrome smoke test still requires loading `dist/` manually.

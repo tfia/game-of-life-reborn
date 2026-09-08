@@ -1,0 +1,37 @@
+name: Release extension
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Read manifest version
+        id: version
+        run: echo "version=$(node -p "require('./src/manifest.json').version")" >> "$GITHUB_OUTPUT"
+      - run: npm test
+      - run: ./build.sh
+      - name: Install Chromium
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+      - name: Build CRX
+        run: |
+          chrome --headless --no-sandbox --disable-gpu --pack-extension="$PWD/dist"
+          test -f dist.crx
+          mv dist.crx "dist/game-of-life-${{ steps.version.outputs.version }}.crx"
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Game of Life ${{ steps.version.outputs.version }}
+          files: |
+            dist/game-of-life-${{ steps.version.outputs.version }}.crx
+            dist/game-of-life.zip
