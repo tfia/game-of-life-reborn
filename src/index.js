@@ -452,14 +452,11 @@
 
   Game._getIntialStatus = function() {
     var board = createStatusBoard()
-    var gs = Game.container.querySelectorAll('.js-calendar-graph-svg > g > g')
     var pallette = {}
-    forEachList(gs, 'rect', function(x, y, rect) {
-      var color = fillColor(rect)
-      var dx = x + 3, dy = y + 4
-      board[dx][dy] = (color === COLOR_DEAD) ? 0 : 1
-      pallette[getKey(dx, dy)] = color
-    })
+    var rects = Game.container.querySelectorAll('.js-calendar-graph-svg > g > g rect')
+    if (rects.length) Array.prototype.forEach.call(rects, function(rect, i) { var x = Math.floor(i / 7), y = i % 7; var dx = y + 3, dy = x + 4; var color = fillColor(rect); board[dx][dy] = color === COLOR_DEAD ? 0 : 1; pallette[getKey(dx, dy)] = color })
+    var cells = Game.container.querySelectorAll('td[data-level], td.ContributionCalendar-day, [data-date][data-level]')
+    Array.prototype.forEach.call(cells, function(cell, i) { var x = i % 53, y = Math.floor(i / 53); var dx = Math.min(12, y), dy = Math.min(59, x); var level = Number(cell.getAttribute('data-level') || 0); var color = cell.getAttribute('style') || COLOR_DEAD; board[dx][dy] = level > 0 ? 1 : 0; pallette[getKey(dx, dy)] = color })
     return { board: board, pallette: pallette }
   }
 
