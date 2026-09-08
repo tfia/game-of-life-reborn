@@ -546,9 +546,7 @@
         Game.play()
         return false
       })
-      if (legend) {
-        legend.insertBefore(play, legend.firstChild)
-      }
+      (legend || graph).insertBefore(play, (legend || graph).firstChild)
     }
   }
 
@@ -637,7 +635,10 @@
     }
   }
 
-  if (typeof document !== 'undefined') Game.init()
+  if (typeof document !== 'undefined') {
+    Game.init()
+    if (typeof MutationObserver !== 'undefined') new MutationObserver(function() { if (!document.getElementById('gol-button-play')) Game.init() }).observe(document.documentElement, {childList:true, subtree:true})
+  }
 
   if (typeof document === 'undefined') return
   var container = document.getElementById('js-pjax-container')
