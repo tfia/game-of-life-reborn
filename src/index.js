@@ -517,7 +517,7 @@
   }
 
   Game.init = function() {
-    var graph = document.querySelector('.js-yearly-contributions')
+    var graph = findCalendar()
     if (hasActiveOverview()) {
       graph.setAttribute('gol-layout-overview', true)
     } else {
@@ -531,7 +531,8 @@
     if (graph && !document.getElementById(id)) {
       var play = document.createElement('a')
       var legend = document.querySelector('.contrib-legend')
-      COLOR_ALIVE = getComputedStyle(legend.querySelector('.legend li:nth-child(3)')).backgroundColor
+      var swatch = legend && (legend.querySelector('.legend li:nth-child(3)') || legend.querySelector('li:nth-child(3)'))
+      if (swatch && typeof getComputedStyle !== 'undefined') COLOR_ALIVE = getComputedStyle(swatch).backgroundColor || COLOR_ALIVE
       play.style.setProperty('--color', COLOR_ALIVE)
       play.id = id
       play.title = "Play Conway's Game of Life"
@@ -547,8 +548,9 @@
   }
 
   Game.play = function() {
-    var gc = Game.container =
-      document.querySelector('.js-calendar-graph').parentNode
+    var calendar = document.querySelector('.js-calendar-graph, [data-testid="contribution-graph"], .ContributionCalendar')
+    if (!calendar || !calendar.parentNode) return false
+    var gc = Game.container = calendar.parentNode
     gc.setAttribute(CONTAINER, '')
     gc.appendChild(Canvas.build())
     gc.appendChild(Controls.build())
@@ -630,8 +632,9 @@
     }
   }
 
-  Game.init()
+  if (typeof document !== 'undefined') Game.init()
 
+  if (typeof document === 'undefined') return
   var container = document.getElementById('js-pjax-container')
   var loaderBar = document.getElementById('js-pjax-loader-bar')
   var maxAttempt = 100
@@ -664,7 +667,7 @@
     }
     isDetecting = true
     setTimeout(function() {
-      if (/is\-loading/.test(loaderBar.className)
+      if (loaderBar && /is\-loading/.test(loaderBar.className)
         || document.getElementById('gol-button-play')) {
         detectPjaxEnd(fn, --attempt)
       } else {
@@ -677,3 +680,10 @@
   }
 
 }())
+
+// Public, DOM independent helpers used by fixtures and integrations.
+function findCalendar(root) {
+  root = root || (typeof document !== 'undefined' ? document : null)
+  if (!root || !root.querySelector) return null
+  return root.querySelector('[data-testid="contribution-graph"], .js-yearly-contributions, .ContributionCalendar')
+}

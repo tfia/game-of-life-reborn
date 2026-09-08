@@ -5,10 +5,14 @@
 
 ## How to play
 
+For Chrome: open `chrome://extensions`, enable Developer mode, choose **Load unpacked**, and select the `src/` directory. Open a GitHub profile with a contribution calendar and click **Play**. Year changes and SPA navigation are handled automatically; pages without a calendar are ignored.
+
   1. Install the extension from [Chrome Web Store](https://chrome.google.com/webstore/detail/game-of-life/bhhddgpklpjchoemcgggncekimleaaok)
   2. Click `Play` button from anyone's GitHub profile page:
 
   ![alt](screencast/play.png)
+
+The extension preserves the original MIT licensed work by Yuán Chuān (`yuanchuan/game-of-life`). Run `npm test` for deterministic local Life and DOM adapter fixtures. Manual verification: load `src/` unpacked in current Chrome, test light/dark profiles, an empty history, year switching, and navigation between profiles.
 
 ## Patterns
 
