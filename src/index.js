@@ -310,6 +310,9 @@
           var key = getKey(x, y)
           cells[key] = elem
           elem.setAttribute('data-key', key)
+          elem.setAttribute('role', 'button')
+          elem.setAttribute('tabindex', '0')
+          elem.setAttribute('aria-label', 'Cell ' + (x + 1) + ', ' + (y + 1))
         })
         return canvas
       },
@@ -317,6 +320,7 @@
         forEachIndex(function(x, y) {
           var key = getKey(x, y)
           var status = board[x][y]
+          cells[key].setAttribute('data-alive', status ? '1' : '0')
           fillColor(cells[key], status
             ? (pallette ? pallette[key] : COLOR_ALIVE)
             : COLOR_DEAD
@@ -324,7 +328,7 @@
         })
       },
       isEmpty: function() {
-        return TOTAL === canvas.querySelectorAll('li[style$="240);"]').length
+        return !canvas || !canvas.querySelector('li[data-alive="1"]')
       },
       animating: function() {
         return animating
@@ -518,6 +522,7 @@
 
   Game.init = function() {
     var graph = findCalendar()
+    if (!graph) return false
     if (hasActiveOverview()) {
       graph.setAttribute('gol-layout-overview', true)
     } else {
