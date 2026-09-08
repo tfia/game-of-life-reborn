@@ -540,10 +540,11 @@
       play.title = "Play Conway's Game of Life"
       play.innerHTML = 'Play'
       play.addEventListener('click', function(e) {
-        Game.play()
+        if (!Game.container) Game.play()
         return false
       });
-      (legend || graph).insertBefore(play, (legend || graph).firstChild)
+      var target = legend || graph.parentNode
+      if (target) target.insertBefore(play, target.firstChild)
     }
   }
 
@@ -623,6 +624,8 @@
   }
 
   Game.close = function() {
+    var play = document.getElementById('gol-button-play')
+    if (play) { play.style.display = ''; play.removeAttribute('aria-disabled') }
     if (Game.container) {
       Game.pause()
       Game.container.removeAttribute(CONTAINER)
