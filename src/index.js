@@ -545,7 +545,7 @@
       play.addEventListener('click', function(e) {
         Game.play()
         return false
-      })
+      });
       (legend || graph).insertBefore(play, (legend || graph).firstChild)
     }
   }
